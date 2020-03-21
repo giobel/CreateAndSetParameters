@@ -12,12 +12,22 @@ namespace WPA
 {
     public partial class CreateParamsForm : Form
     {
-        public List<string> parametersNames { get; set; }
-        public List<string> parametersValues { get; set; }
+        public List<string> ParametersNames { get; set; }
+        public List<string> ParametersValues { get; set; }
 
-        public CreateParamsForm()
+        public List<string> SelectedCategories= new List<string>();
+
+        public CreateParamsForm(List<string> categories)
         {
             InitializeComponent();
+
+            for (int i = 0; i < checkedListBoxCategories.Items.Count; i++)
+            {
+                if (categories.Contains(checkedListBoxCategories.Items[i]))
+                {
+                    checkedListBoxCategories.SetItemChecked(i, true);
+                }
+            }
 
             comboBoxElementLOD.SelectedIndex = 0;
             comboBoxIsConstructed.SelectedIndex = 1;
@@ -30,61 +40,72 @@ namespace WPA
 
         private void okButton_Click(object sender, EventArgs e)
         {
+            #region Get Selected Categories
+
+            foreach (string item in checkedListBoxCategories.CheckedItems)
+            {
+                SelectedCategories.Add(item);
+            }
+
+            #endregion
+
             #region Get Parameter Names
-            parametersNames = new List<string>();
-            parametersNames.Add(textBoxModelName.Text);
-            parametersNames.Add(textBoxDesignPackageNumber.Text);
-            parametersNames.Add(textBoxElementAuthor.Text);
-            parametersNames.Add(textBoxElementDiscipline.Text);
-            parametersNames.Add(textBoxElementStatus.Text);
-            parametersNames.Add(textBoxElementSuitability.Text);
-            parametersNames.Add(textBoxElementLOD.Text);
-            parametersNames.Add(textBoxIsConstructed.Text);
-            parametersNames.Add(textBoxSBSID.Text);
-            parametersNames.Add(textBoxHandover.Text);
+            ParametersNames = new List<string>();
+            ParametersNames.Add(textBoxModelName.Text);
+            ParametersNames.Add(textBoxDesignPackageNumber.Text);
+            ParametersNames.Add(textBoxElementAuthor.Text);
+            ParametersNames.Add(textBoxElementDiscipline.Text);
+            ParametersNames.Add(textBoxElementStatus.Text);
+            ParametersNames.Add(textBoxElementSuitability.Text);
+            ParametersNames.Add(textBoxElementLOD.Text);
+            ParametersNames.Add(textBoxIsConstructed.Text);
+            ParametersNames.Add(textBoxSBSID.Text);
+            ParametersNames.Add(textBoxHandover.Text);
 
             //additional parameters
             if (textBoxNew1.Text.Length > 3)
             {
-                parametersNames.Add(textBoxNew1.Text);
+                ParametersNames.Add(textBoxNew1.Text);
             }
             if (textBoxNew2.Text.Length > 3)
             {
-                parametersNames.Add(textBoxNew2.Text);
+                ParametersNames.Add(textBoxNew2.Text);
             }
             if (textBoxNew3.Text.Length > 3)
             {
-                parametersNames.Add(textBoxNew3.Text);
+                ParametersNames.Add(textBoxNew3.Text);
             }
             #endregion
 
             #region Get Parameter Values
-            parametersValues = new List<string>();
-            parametersValues.Add(textBoxModelNameValue.Text);
-            parametersValues.Add(comboBoxDesignPackageNumber.Text);
-            parametersValues.Add(comboBoxElementAuthor.Text);
-            parametersValues.Add(comboBoxElementDiscipline.Text);
-            parametersValues.Add(comboBoxElementStatus.Text);
-            parametersValues.Add(comboBoxElementSuitability.Text);
-            parametersValues.Add(comboBoxElementLOD.Text);
-            parametersValues.Add(comboBoxIsConstructed.Text);
-            parametersValues.Add(textBoxSBSIDValue.Text);
-            parametersValues.Add(textBoxHandoverValue.Text);
+            ParametersValues = new List<string>();
+            ParametersValues.Add(textBoxModelNameValue.Text);
+            ParametersValues.Add(comboBoxDesignPackageNumber.Text);
+            ParametersValues.Add(comboBoxElementAuthor.Text);
+            ParametersValues.Add(comboBoxElementDiscipline.Text);
+            ParametersValues.Add(comboBoxElementStatus.Text);
+            ParametersValues.Add(comboBoxElementSuitability.Text);
+            ParametersValues.Add(comboBoxElementLOD.Text);
+            ParametersValues.Add(comboBoxIsConstructed.Text);
+            ParametersValues.Add(textBoxSBSIDValue.Text);
+            ParametersValues.Add(textBoxHandoverValue.Text);
 
             //additional parameters
             if (textBoxValueNew1.Text.Length > 3)
             {
-                parametersValues.Add(textBoxValueNew1.Text);
+                ParametersValues.Add(textBoxValueNew1.Text);
             }
             if (textBoxValueNew2.Text.Length > 3)
             {
-                parametersValues.Add(textBoxValueNew2.Text);
+                ParametersValues.Add(textBoxValueNew2.Text);
             }
             if (textBoxValueNew3.Text.Length > 3)
             {
-                parametersValues.Add(textBoxValueNew3.Text);
+                ParametersValues.Add(textBoxValueNew3.Text);
             }
             #endregion
+
+
         }
     }
 }

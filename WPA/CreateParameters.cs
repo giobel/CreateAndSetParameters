@@ -27,8 +27,13 @@ namespace WPA
 
            Debug.Print("Start");
 
-            using (var form = new CreateParamsForm())
+            List<string> categoriesList = new List<string>() { "Air Terminals", "Balusters", "Cable Trays", "Casework", "Ceilings",
+            "Duct Accessories", "Duct Fittings", "Duct Systems", "Wires"};
+
+            
+            using (var form = new CreateParamsForm(categoriesList))
             {
+                
                 form.ShowDialog();
 
                 if (form.DialogResult == System.Windows.Forms.DialogResult.Cancel)
@@ -38,13 +43,15 @@ namespace WPA
 
                 StringBuilder sb = new StringBuilder();
 
-                for (int i = 0; i < form.parametersNames.Count; i++)
+                for (int i = 0; i < form.ParametersNames.Count; i++)
                 {
-                    sb.AppendLine($"{form.parametersNames[i]} : {form.parametersValues[i]}");
+                    sb.AppendLine($"{form.ParametersNames[i]} : {form.ParametersValues[i]}");
                 }
 
-
-                
+                foreach (var item in form.SelectedCategories)
+                {
+                    sb.AppendLine(item);
+                }
 
                 TaskDialog.Show("r", sb.ToString());
             }

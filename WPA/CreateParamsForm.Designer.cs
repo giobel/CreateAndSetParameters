@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.textBoxModelName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -61,15 +60,8 @@
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.checkedListBoxCategories = new System.Windows.Forms.CheckedListBox();
             this.SuspendLayout();
-            // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(12, 31);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(245, 394);
-            this.checkedListBox1.TabIndex = 0;
             // 
             // textBoxModelName
             // 
@@ -84,9 +76,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 10);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 13);
+            this.label1.Size = new System.Drawing.Size(127, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Categories:";
+            this.label1.Text = "Revit element categories:";
             // 
             // label2
             // 
@@ -350,11 +342,123 @@
             this.label4.TabIndex = 42;
             this.label4.Text = "Version 0.0.1";
             // 
+            // checkedListBoxCategories
+            // 
+            this.checkedListBoxCategories.CheckOnClick = true;
+            this.checkedListBoxCategories.FormattingEnabled = true;
+            this.checkedListBoxCategories.Items.AddRange(new object[] {
+            "Air Terminals",
+            "Balusters",
+            "Cable Tray Fittings",
+            "Cable Trays",
+            "Casework",
+            "Ceilings",
+            "Chord",
+            "Columns",
+            "Communication Devices",
+            "Conduits",
+            "Curtain Panels",
+            "Curtain Systems",
+            "Curtain Wall Grids",
+            "Curtain Wall Mullions",
+            "Data Devices",
+            "Detail Items",
+            "Doors",
+            "Duct Accessories",
+            "Duct Fittings",
+            "Duct Systems",
+            "Electrical Circuits",
+            "Electrical Circuits",
+            "Electrical Equipment",
+            "Electrical Fixtures",
+            "Entourage",
+            "Fascias",
+            "Fire Alarm Devices",
+            "Flex Ducts",
+            "Flex Pipes",
+            "Floors",
+            "Form",
+            "Frame/Mullion",
+            "Furniture",
+            "Furniture Systems",
+            "Generic Models",
+            "Girder",
+            "Glass",
+            "Gutters",
+            "Hidden Lines",
+            "Hidden Lines",
+            "Home Run Arrows",
+            "Horizontal Bracing",
+            "HVAC Zones",
+            "Joist",
+            "Kicker Bracing",
+            "Light Source",
+            "Lighting Devices",
+            "Lighting Fixtures",
+            "Mass",
+            "Mechanical Equipment",
+            "Membrane Layer",
+            "Nurse Call Devices",
+            "Opening",
+            "Other",
+            "Pads",
+            "Parking",
+            "Pipe Accessories",
+            "Pipe Fittings",
+            "Piping Systems",
+            "Planting",
+            "Plumbing Fixtures",
+            "Primary Contours",
+            "Purlin",
+            "Railings",
+            "Rails",
+            "Ramps",
+            "Roads",
+            "Roof Soffits",
+            "Roofs",
+            "Rooms",
+            "Security Devices",
+            "Shaft Openings",
+            "Sill/Head",
+            "Site",
+            "Slab Edges",
+            "Specialty Equipment",
+            "Sprinklers",
+            "Stairs",
+            "Stringers",
+            "Stringers",
+            "Structural Beam Systems",
+            "Structural Columns",
+            "Structural Connections",
+            "Structural Foundations",
+            "Structural Framing",
+            "Structural Path Reinforcement",
+            "Structural Rebar",
+            "Structural Stiffeners",
+            "Structural Truss Tags",
+            "Structural Trusses",
+            "Surface Pattern",
+            "Telephone Devices",
+            "Topography",
+            "Triangulation Edges",
+            "Vertical Bracing",
+            "Wall Sweeps",
+            "Walls",
+            "Web",
+            "Windows",
+            "Wires"});
+            this.checkedListBoxCategories.Location = new System.Drawing.Point(12, 31);
+            this.checkedListBoxCategories.Name = "checkedListBoxCategories";
+            this.checkedListBoxCategories.Size = new System.Drawing.Size(244, 379);
+            this.checkedListBoxCategories.Sorted = true;
+            this.checkedListBoxCategories.TabIndex = 43;
+            // 
             // CreateParamsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(707, 454);
+            this.Controls.Add(this.checkedListBoxCategories);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
@@ -387,7 +491,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxModelName);
-            this.Controls.Add(this.checkedListBox1);
             this.Name = "CreateParamsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Create Parameters";
@@ -397,8 +500,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.TextBox textBoxModelName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -431,5 +532,6 @@
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckedListBox checkedListBoxCategories;
     }
 }
