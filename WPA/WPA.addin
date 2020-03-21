@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Command WPA</Text>
+    <Description>Some description for WPA</Description>
+    <Assembly>WPA.dll</Assembly>
+    <FullClassName>WPA.Command</FullClassName>
+    <ClientId>4ef96083-ddc9-41eb-80f8-810ca6b983b4</ClientId>
+    <VendorId>com.typepad.thebuildingcoder</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Application WPA</Name>
+    <Assembly>WPA.dll</Assembly>
+    <FullClassName>WPA.App</FullClassName>
+    <ClientId>16b08870-5a45-4b27-baa1-c487a0a3ffac</ClientId>
+    <VendorId>com.typepad.thebuildingcoder</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>
