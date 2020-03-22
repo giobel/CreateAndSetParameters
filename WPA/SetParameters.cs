@@ -15,7 +15,7 @@ using System.Linq;
 namespace WPA
 {
     [Transaction(TransactionMode.Manual)]
-    public class CreateParameters : IExternalCommand
+    public class SetParameters : IExternalCommand
     {
         public Result Execute(
           ExternalCommandData commandData,
@@ -29,9 +29,6 @@ namespace WPA
 
            Debug.Print("Start");
 
-            //categories selected by default
-           List<string> defaultSelectedCategories = new List<string>() { "Air Terminals", "Cable Trays", "Casework", "Ceilings",
-            "Duct Accessories", "Duct Fittings", "Duct Systems", "Wires"};
 
             //categories in the current model excluding tags and analytical
             List<string> documentCategories = new List<string>();
@@ -45,7 +42,7 @@ namespace WPA
 
             }
             
-            using (var form = new CreateParamsForm(documentCategories, defaultSelectedCategories))
+            using (var form = new SetParamsForm(documentCategories))
             {
                 
                 form.ShowDialog();
@@ -58,8 +55,7 @@ namespace WPA
                 StringBuilder sb = new StringBuilder();
 
                 List<Category> selectedCategories = new List<Category>();
-
-                Dictionary<string, string> parametersNamesAndValues = new Dictionary<string, string>();
+                List<string> parametersNames = new List<string>();
 
 
                 Categories allCategories = doc.Settings.Categories;
@@ -79,61 +75,33 @@ namespace WPA
                     sb.AppendLine($"{form.ParametersNames[i]}");
                     if (form.ParametersNames[i].Length > 3)
                     {
-                        parametersNamesAndValues.Add(form.ParametersNames[i], form.ParametersValues[i]);
+                        parametersNames.Add(form.ParametersNames[i]);
                     }
                 }
 
 
                 //if a parameter with the same is already in the project, throw an error
-
-                int count = 0;
-
+                
                 using (Transaction t = new Transaction(doc, "Add parameters"))
                 {
                     t.Start();
 
-                    count = CreateProjectParameters(app, doc, selectedCategories, parametersNamesAndValues.Keys.ToList(), "Data");
+                    CreateProjectParameters(app, doc, selectedCategories, parametersNames, "Data");
 
                     t.Commit();
                 }
-
-                TaskDialog.Show("Result", $"{count} parameters added");
-
-                using (Transaction t = new Transaction(doc, "Set parameters"))
-                {
-                    t.Start();
-
-                    foreach (string categoryName in form.SelectedCategories)
-                    {
-                        Category cat = doc.Settings.Categories.get_Item(categoryName);
-
-                        IList<Element> allElements = new FilteredElementCollector(doc).OfCategoryId(cat.Id).WhereElementIsNotElementType().ToElements();
-
-                        foreach (Element element in allElements)
-                        {
-                            foreach (string param in parametersNamesAndValues.Keys)
-                            {
-                                element.LookupParameter(param).Set(parametersNamesAndValues[param]);
-                            }
-                        }
-                    }
-
-                    t.Commit();
-                }
-
 
 
                 //TaskDialog.Show("r", sb.ToString());
             }
-
+            
 
 
             return Result.Succeeded;
         }
 
-        private static int CreateProjectParameters(Application app, Document doc, List<Category> RevitCategories, List<string> Parameters, string GroupName)
+        private static void CreateProjectParameters(Application app, Document doc, List<Category> RevitCategories, List<string> Parameters, string GroupName)
         {
-            int count = 0;
             CategorySet cats = app.Create.NewCategorySet();
 
             foreach (Category item in RevitCategories)
@@ -164,9 +132,7 @@ namespace WPA
 
                         InstanceBinding newInstanceBinding = app.Create.NewInstanceBinding(cats);
 
-                        doc.ParameterBindings.Insert(externalDefinition, newInstanceBinding, BuiltInParameterGroup.PG_DATA);
-
-                    count++;
+                        doc.ParameterBindings.Insert(externalDefinition, newInstanceBinding, BuiltInParameterGroup.PG_DATA);              
                 }
 
             }
@@ -180,8 +146,6 @@ namespace WPA
             }
 
             File.Delete(tempSharedParameterFile);
-
-            return count;
         }
     }
 }

@@ -8,16 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WPA
+namespace Test
 {
-    public partial class CreateParamsForm : Form
+    public partial class Test : Form
     {
         public List<string> ParametersNames { get; set; }
         public List<string> ParametersValues { get; set; }
 
         public List<string> SelectedCategories= new List<string>();
 
-        public CreateParamsForm(List<string> categories, List<string> defaultSelectedCategories)
+        public Test(List<string> categories, List<string> defaultSelectedCategories)
         {
             InitializeComponent();
 
@@ -125,21 +125,6 @@ namespace WPA
             textBoxIsConstructed.Text = "";
             textBoxSBSID.Text = "";
             textBoxHandover.Text = "";
-
-            textBoxModelNameValue.Text = "";
-            comboBoxElementLOD.Text = "";
-            comboBoxIsConstructed.Text = "";
-            comboBoxElementSuitability.Text = "";
-            comboBoxElementStatus.Text = "";
-            comboBoxElementDiscipline.Text = "";
-            comboBoxElementAuthor.Text = "";
-            comboBoxDesignPackageNumber.Text = "";
-        }
-
-        private void checkBoxCheckList_CheckedChanged(object sender, EventArgs e)
-        {
-            while (checkedListBoxCategories.CheckedIndices.Count > 0)
-                checkedListBoxCategories.SetItemChecked(checkedListBoxCategories.CheckedIndices[0], false);
         }
     }
 }

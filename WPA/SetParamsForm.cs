@@ -10,29 +10,16 @@ using System.Windows.Forms;
 
 namespace WPA
 {
-    public partial class CreateParamsForm : Form
+    public partial class SetParamsForm : Form
     {
         public List<string> ParametersNames { get; set; }
         public List<string> ParametersValues { get; set; }
 
         public List<string> SelectedCategories= new List<string>();
 
-        public CreateParamsForm(List<string> categories, List<string> defaultSelectedCategories)
+        public SetParamsForm(List<string> categories)
         {
             InitializeComponent();
-
-            foreach (var item in categories)
-            {
-                checkedListBoxCategories.Items.Add(item, false);
-            }
-
-            for (int i = 0; i < checkedListBoxCategories.Items.Count; i++)
-            {
-                if (defaultSelectedCategories.Contains(checkedListBoxCategories.Items[i]))
-                {
-                    checkedListBoxCategories.SetItemChecked(i, true);
-                }
-            }
 
             comboBoxElementLOD.SelectedIndex = 0;
             comboBoxIsConstructed.SelectedIndex = 1;
@@ -47,10 +34,6 @@ namespace WPA
         {
             #region Get Selected Categories
 
-            foreach (string item in checkedListBoxCategories.CheckedItems)
-            {
-                SelectedCategories.Add(item);
-            }
 
             #endregion
 
@@ -82,33 +65,33 @@ namespace WPA
             }
             #endregion
 
-            #region Get Parameter Values
-            ParametersValues = new List<string>();
-            ParametersValues.Add(textBoxModelNameValue.Text);
-            ParametersValues.Add(comboBoxDesignPackageNumber.Text);
-            ParametersValues.Add(comboBoxElementAuthor.Text);
-            ParametersValues.Add(comboBoxElementDiscipline.Text);
-            ParametersValues.Add(comboBoxElementStatus.Text);
-            ParametersValues.Add(comboBoxElementSuitability.Text);
-            ParametersValues.Add(comboBoxElementLOD.Text);
-            ParametersValues.Add(comboBoxIsConstructed.Text);
-            ParametersValues.Add(textBoxSBSIDValue.Text);
-            ParametersValues.Add(textBoxHandoverValue.Text);
+            //#region Get Parameter Values
+            //ParametersValues = new List<string>();
+            //ParametersValues.Add(textBoxModelNameValue.Text);
+            //ParametersValues.Add(comboBoxDesignPackageNumber.Text);
+            //ParametersValues.Add(comboBoxElementAuthor.Text);
+            //ParametersValues.Add(comboBoxElementDiscipline.Text);
+            //ParametersValues.Add(comboBoxElementStatus.Text);
+            //ParametersValues.Add(comboBoxElementSuitability.Text);
+            //ParametersValues.Add(comboBoxElementLOD.Text);
+            //ParametersValues.Add(comboBoxIsConstructed.Text);
+            //ParametersValues.Add(textBoxSBSIDValue.Text);
+            //ParametersValues.Add(textBoxHandoverValue.Text);
 
-            //additional parameters
-            if (textBoxValueNew1.Text.Length > 3)
-            {
-                ParametersValues.Add(textBoxValueNew1.Text);
-            }
-            if (textBoxValueNew2.Text.Length > 3)
-            {
-                ParametersValues.Add(textBoxValueNew2.Text);
-            }
-            if (textBoxValueNew3.Text.Length > 3)
-            {
-                ParametersValues.Add(textBoxValueNew3.Text);
-            }
-            #endregion
+            ////additional parameters
+            //if (textBoxValueNew1.Text.Length > 3)
+            //{
+            //    ParametersValues.Add(textBoxValueNew1.Text);
+            //}
+            //if (textBoxValueNew2.Text.Length > 3)
+            //{
+            //    ParametersValues.Add(textBoxValueNew2.Text);
+            //}
+            //if (textBoxValueNew3.Text.Length > 3)
+            //{
+            //    ParametersValues.Add(textBoxValueNew3.Text);
+            //}
+            //#endregion
 
 
         }
@@ -125,21 +108,11 @@ namespace WPA
             textBoxIsConstructed.Text = "";
             textBoxSBSID.Text = "";
             textBoxHandover.Text = "";
-
-            textBoxModelNameValue.Text = "";
-            comboBoxElementLOD.Text = "";
-            comboBoxIsConstructed.Text = "";
-            comboBoxElementSuitability.Text = "";
-            comboBoxElementStatus.Text = "";
-            comboBoxElementDiscipline.Text = "";
-            comboBoxElementAuthor.Text = "";
-            comboBoxDesignPackageNumber.Text = "";
         }
 
         private void checkBoxCheckList_CheckedChanged(object sender, EventArgs e)
         {
-            while (checkedListBoxCategories.CheckedIndices.Count > 0)
-                checkedListBoxCategories.SetItemChecked(checkedListBoxCategories.CheckedIndices[0], false);
+
         }
     }
 }
