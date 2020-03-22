@@ -17,13 +17,18 @@ namespace WPA
 
         public List<string> SelectedCategories= new List<string>();
 
-        public CreateParamsForm(List<string> categories)
+        public CreateParamsForm(List<string> categories, List<string> defaultSelectedCategories)
         {
             InitializeComponent();
 
+            foreach (var item in categories)
+            {
+                checkedListBoxCategories.Items.Add(item, false);
+            }
+
             for (int i = 0; i < checkedListBoxCategories.Items.Count; i++)
             {
-                if (categories.Contains(checkedListBoxCategories.Items[i]))
+                if (defaultSelectedCategories.Contains(checkedListBoxCategories.Items[i]))
                 {
                     checkedListBoxCategories.SetItemChecked(i, true);
                 }
@@ -106,6 +111,20 @@ namespace WPA
             #endregion
 
 
+        }
+
+        private void checkBoxCleanNames_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxModelName.Text = "";
+            textBoxDesignPackageNumber.Text = "";
+            textBoxElementAuthor.Text = "";
+            textBoxElementDiscipline.Text = "";
+            textBoxElementStatus.Text = "";
+            textBoxElementSuitability.Text = "";
+            textBoxElementLOD.Text = "";
+            textBoxIsConstructed.Text = "";
+            textBoxSBSID.Text = "";
+            textBoxHandover.Text = "";
         }
     }
 }

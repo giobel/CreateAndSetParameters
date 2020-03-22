@@ -61,6 +61,7 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.checkedListBoxCategories = new System.Windows.Forms.CheckedListBox();
+            this.checkBoxCleanNames = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // textBoxModelName
@@ -346,118 +347,29 @@
             // 
             this.checkedListBoxCategories.CheckOnClick = true;
             this.checkedListBoxCategories.FormattingEnabled = true;
-            this.checkedListBoxCategories.Items.AddRange(new object[] {
-            "Air Terminals",
-            "Balusters",
-            "Cable Tray Fittings",
-            "Cable Trays",
-            "Casework",
-            "Ceilings",
-            "Chord",
-            "Columns",
-            "Communication Devices",
-            "Conduits",
-            "Curtain Panels",
-            "Curtain Systems",
-            "Curtain Wall Grids",
-            "Curtain Wall Mullions",
-            "Data Devices",
-            "Detail Items",
-            "Doors",
-            "Duct Accessories",
-            "Duct Fittings",
-            "Duct Systems",
-            "Electrical Circuits",
-            "Electrical Circuits",
-            "Electrical Equipment",
-            "Electrical Fixtures",
-            "Entourage",
-            "Fascias",
-            "Fire Alarm Devices",
-            "Flex Ducts",
-            "Flex Pipes",
-            "Floors",
-            "Form",
-            "Frame/Mullion",
-            "Furniture",
-            "Furniture Systems",
-            "Generic Models",
-            "Girder",
-            "Glass",
-            "Gutters",
-            "Hidden Lines",
-            "Hidden Lines",
-            "Home Run Arrows",
-            "Horizontal Bracing",
-            "HVAC Zones",
-            "Joist",
-            "Kicker Bracing",
-            "Light Source",
-            "Lighting Devices",
-            "Lighting Fixtures",
-            "Mass",
-            "Mechanical Equipment",
-            "Membrane Layer",
-            "Nurse Call Devices",
-            "Opening",
-            "Other",
-            "Pads",
-            "Parking",
-            "Pipe Accessories",
-            "Pipe Fittings",
-            "Piping Systems",
-            "Planting",
-            "Plumbing Fixtures",
-            "Primary Contours",
-            "Purlin",
-            "Railings",
-            "Rails",
-            "Ramps",
-            "Roads",
-            "Roof Soffits",
-            "Roofs",
-            "Rooms",
-            "Security Devices",
-            "Shaft Openings",
-            "Sill/Head",
-            "Site",
-            "Slab Edges",
-            "Specialty Equipment",
-            "Sprinklers",
-            "Stairs",
-            "Stringers",
-            "Stringers",
-            "Structural Beam Systems",
-            "Structural Columns",
-            "Structural Connections",
-            "Structural Foundations",
-            "Structural Framing",
-            "Structural Path Reinforcement",
-            "Structural Rebar",
-            "Structural Stiffeners",
-            "Structural Truss Tags",
-            "Structural Trusses",
-            "Surface Pattern",
-            "Telephone Devices",
-            "Topography",
-            "Triangulation Edges",
-            "Vertical Bracing",
-            "Wall Sweeps",
-            "Walls",
-            "Web",
-            "Windows",
-            "Wires"});
             this.checkedListBoxCategories.Location = new System.Drawing.Point(12, 31);
             this.checkedListBoxCategories.Name = "checkedListBoxCategories";
             this.checkedListBoxCategories.Size = new System.Drawing.Size(244, 379);
             this.checkedListBoxCategories.Sorted = true;
             this.checkedListBoxCategories.TabIndex = 43;
             // 
+            // checkBoxCleanNames
+            // 
+            this.checkBoxCleanNames.AutoSize = true;
+            this.checkBoxCleanNames.Location = new System.Drawing.Point(284, 379);
+            this.checkBoxCleanNames.Name = "checkBoxCleanNames";
+            this.checkBoxCleanNames.Size = new System.Drawing.Size(140, 17);
+            this.checkBoxCleanNames.TabIndex = 44;
+            this.checkBoxCleanNames.Text = "Clean Parameter Names";
+            this.checkBoxCleanNames.UseVisualStyleBackColor = true;
+            this.checkBoxCleanNames.CheckedChanged += new System.EventHandler(this.checkBoxCleanNames_CheckedChanged);
+            // 
             // CreateParamsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(707, 454);
+            this.Controls.Add(this.checkBoxCleanNames);
             this.Controls.Add(this.checkedListBoxCategories);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cancelButton);
@@ -533,5 +445,6 @@
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckedListBox checkedListBoxCategories;
+        private System.Windows.Forms.CheckBox checkBoxCleanNames;
     }
 }
