@@ -31,7 +31,7 @@ namespace WPA
 
             //categories selected by default
            List<string> defaultSelectedCategories = new List<string>() { "Air Terminals", "Cable Trays", "Casework", "Ceilings",
-            "Duct Accessories", "Duct Fittings", "Duct Systems", "Wires"};
+            "Duct Accessories", "Duct Fittings", "Duct Systems", "Floors", "Wires"};
 
             //categories in the current model excluding tags and analytical
             List<string> documentCategories = new List<string>();
@@ -92,7 +92,7 @@ namespace WPA
                 {
                     t.Start();
 
-                    count = CreateProjectParameters(app, doc, selectedCategories, parametersNamesAndValues.Keys.ToList(), "Data");
+                    count = CreateProjectParameters(app, doc, selectedCategories, parametersNamesAndValues.Keys.ToList(), "WPA-Data");
 
                     t.Commit();
                 }
@@ -140,8 +140,9 @@ namespace WPA
             {
                 IList<Element> fec = new FilteredElementCollector(doc).OfCategoryId(item.Id).WhereElementIsNotElementType().ToElements();
 
-                //only checks the first parameter..not very strong
-                if (fec.Count > 0 && fec.First().LookupParameter(Parameters.First()) == null)
+                //only checks the first parameter..not very strong..NOT the best way to do it
+                //if (fec.Count > 0 && fec.First().LookupParameter(Parameters.First()) == null)
+                if (fec.Count > 0)
                 {
                     cats.Insert(item);
                 }
@@ -149,6 +150,7 @@ namespace WPA
 
             //get the parameter file
             string sharedParameterFile = doc.Application.SharedParametersFilename;
+
             string tempSharedParameterFile = @"C:\Temp\tempSharedParam.txt";
 
             using (File.Create(tempSharedParameterFile)) { }
@@ -156,19 +158,42 @@ namespace WPA
 
             DefinitionGroup groupName = app.OpenSharedParameterFile().Groups.Create(GroupName); //store under Data
 
+            FilteredElementCollector fecParameterElements = new FilteredElementCollector(doc).OfClass(typeof(ParameterElement));
+
+            List<string> existingParametersName = new List<string>();
+
+            foreach (ParameterElement item in fecParameterElements)
+            {
+                existingParametersName.Add(item.Name);
+            }
+
             try
             {
                 foreach (string name in Parameters)
                 {
-                        ExternalDefinition externalDefinition = groupName.Definitions.Create(new ExternalDefinitionCreationOptions(name, ParameterType.Text)) as ExternalDefinition;
+                    //for each category in cats, if the category has already a parameter, do not create a new one!
+                    //make a copy of the list of category and remove the non required ones
 
-                        InstanceBinding newInstanceBinding = app.Create.NewInstanceBinding(cats);
+                    CategorySet tempCategorySet = app.Create.NewCategorySet();
+
+                    foreach (Category item in RevitCategories)
+                    {
+                        IList<Element> fec = new FilteredElementCollector(doc).OfCategoryId(item.Id).WhereElementIsNotElementType().ToElements();
+
+                        if (fec.Count > 0 && fec.First().LookupParameter(name) == null)
+                        {
+                            tempCategorySet.Insert(item);
+                        }
+                    }
+
+                    ExternalDefinition externalDefinition = groupName.Definitions.Create(new ExternalDefinitionCreationOptions(name, ParameterType.Text)) as ExternalDefinition;
+
+                        InstanceBinding newInstanceBinding = app.Create.NewInstanceBinding(tempCategorySet); //cats
 
                         doc.ParameterBindings.Insert(externalDefinition, newInstanceBinding, BuiltInParameterGroup.PG_DATA);
 
-                    count++;
+                        count++;                        
                 }
-
             }
             catch(Exception ex)
             {
@@ -179,7 +204,7 @@ namespace WPA
                 app.SharedParametersFilename = sharedParameterFile;
             }
 
-            File.Delete(tempSharedParameterFile);
+            //File.Delete(tempSharedParameterFile);
 
             return count;
         }

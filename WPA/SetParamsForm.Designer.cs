@@ -69,6 +69,7 @@
             // 
             this.textBoxModelName.Location = new System.Drawing.Point(284, 31);
             this.textBoxModelName.Name = "textBoxModelName";
+            this.textBoxModelName.ReadOnly = true;
             this.textBoxModelName.Size = new System.Drawing.Size(130, 20);
             this.textBoxModelName.TabIndex = 1;
             this.textBoxModelName.Text = "Model Name";
@@ -86,6 +87,7 @@
             // 
             this.textBoxElementAuthor.Location = new System.Drawing.Point(284, 81);
             this.textBoxElementAuthor.Name = "textBoxElementAuthor";
+            this.textBoxElementAuthor.ReadOnly = true;
             this.textBoxElementAuthor.Size = new System.Drawing.Size(130, 20);
             this.textBoxElementAuthor.TabIndex = 5;
             this.textBoxElementAuthor.Text = "Element Author";
@@ -94,6 +96,7 @@
             // 
             this.textBoxElementDiscipline.Location = new System.Drawing.Point(284, 107);
             this.textBoxElementDiscipline.Name = "textBoxElementDiscipline";
+            this.textBoxElementDiscipline.ReadOnly = true;
             this.textBoxElementDiscipline.Size = new System.Drawing.Size(130, 20);
             this.textBoxElementDiscipline.TabIndex = 7;
             this.textBoxElementDiscipline.Text = "Element Discipline";
@@ -102,6 +105,7 @@
             // 
             this.textBoxElementStatus.Location = new System.Drawing.Point(284, 133);
             this.textBoxElementStatus.Name = "textBoxElementStatus";
+            this.textBoxElementStatus.ReadOnly = true;
             this.textBoxElementStatus.Size = new System.Drawing.Size(130, 20);
             this.textBoxElementStatus.TabIndex = 9;
             this.textBoxElementStatus.Text = "Element Status";
@@ -110,6 +114,7 @@
             // 
             this.textBoxElementSuitability.Location = new System.Drawing.Point(284, 159);
             this.textBoxElementSuitability.Name = "textBoxElementSuitability";
+            this.textBoxElementSuitability.ReadOnly = true;
             this.textBoxElementSuitability.Size = new System.Drawing.Size(130, 20);
             this.textBoxElementSuitability.TabIndex = 11;
             this.textBoxElementSuitability.Text = "Element Suitability";
@@ -118,6 +123,7 @@
             // 
             this.textBoxDesignPackageNumber.Location = new System.Drawing.Point(284, 54);
             this.textBoxDesignPackageNumber.Name = "textBoxDesignPackageNumber";
+            this.textBoxDesignPackageNumber.ReadOnly = true;
             this.textBoxDesignPackageNumber.Size = new System.Drawing.Size(130, 20);
             this.textBoxDesignPackageNumber.TabIndex = 3;
             this.textBoxDesignPackageNumber.Text = "Design Package Number";
@@ -126,6 +132,7 @@
             // 
             this.textBoxElementLOD.Location = new System.Drawing.Point(284, 187);
             this.textBoxElementLOD.Name = "textBoxElementLOD";
+            this.textBoxElementLOD.ReadOnly = true;
             this.textBoxElementLOD.Size = new System.Drawing.Size(130, 20);
             this.textBoxElementLOD.TabIndex = 13;
             this.textBoxElementLOD.Text = "Element LOD";
@@ -134,6 +141,7 @@
             // 
             this.textBoxIsConstructed.Location = new System.Drawing.Point(284, 213);
             this.textBoxIsConstructed.Name = "textBoxIsConstructed";
+            this.textBoxIsConstructed.ReadOnly = true;
             this.textBoxIsConstructed.Size = new System.Drawing.Size(130, 20);
             this.textBoxIsConstructed.TabIndex = 15;
             this.textBoxIsConstructed.Text = "Is Constructed";
@@ -142,6 +150,7 @@
             // 
             this.textBoxSBSID.Location = new System.Drawing.Point(284, 239);
             this.textBoxSBSID.Name = "textBoxSBSID";
+            this.textBoxSBSID.ReadOnly = true;
             this.textBoxSBSID.Size = new System.Drawing.Size(130, 20);
             this.textBoxSBSID.TabIndex = 17;
             this.textBoxSBSID.Text = "SBS-ID";
@@ -150,6 +159,7 @@
             // 
             this.textBoxHandover.Location = new System.Drawing.Point(284, 265);
             this.textBoxHandover.Name = "textBoxHandover";
+            this.textBoxHandover.ReadOnly = true;
             this.textBoxHandover.Size = new System.Drawing.Size(130, 20);
             this.textBoxHandover.TabIndex = 19;
             this.textBoxHandover.Text = "Handover Lot No";
