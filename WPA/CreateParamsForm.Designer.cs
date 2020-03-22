@@ -76,7 +76,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 10);
+            this.label1.Location = new System.Drawing.Point(22, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(127, 13);
             this.label1.TabIndex = 2;
@@ -85,7 +85,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(281, 9);
+            this.label2.Location = new System.Drawing.Point(284, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(91, 13);
             this.label2.TabIndex = 3;
@@ -186,6 +186,7 @@
             // 
             // okButton
             // 
+            this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.okButton.Location = new System.Drawing.Point(391, 405);
             this.okButton.Name = "okButton";
@@ -197,6 +198,7 @@
             // 
             // cancelButton
             // 
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelButton.Location = new System.Drawing.Point(546, 405);
             this.cancelButton.Name = "cancelButton";
@@ -207,8 +209,9 @@
             // 
             // label4
             // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 429);
+            this.label4.Location = new System.Drawing.Point(607, 455);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(69, 13);
             this.label4.TabIndex = 42;
@@ -217,17 +220,20 @@
             // checkedListBoxCategories
             // 
             this.checkedListBoxCategories.CheckOnClick = true;
+            this.checkedListBoxCategories.ColumnWidth = 200;
+            this.checkedListBoxCategories.Dock = System.Windows.Forms.DockStyle.Left;
             this.checkedListBoxCategories.FormattingEnabled = true;
-            this.checkedListBoxCategories.Location = new System.Drawing.Point(12, 31);
+            this.checkedListBoxCategories.Location = new System.Drawing.Point(10, 10);
+            this.checkedListBoxCategories.Margin = new System.Windows.Forms.Padding(10);
             this.checkedListBoxCategories.Name = "checkedListBoxCategories";
-            this.checkedListBoxCategories.Size = new System.Drawing.Size(244, 334);
+            this.checkedListBoxCategories.Size = new System.Drawing.Size(244, 461);
             this.checkedListBoxCategories.Sorted = true;
             this.checkedListBoxCategories.TabIndex = 43;
             // 
             // checkBoxCleanNames
             // 
             this.checkBoxCleanNames.AutoSize = true;
-            this.checkBoxCleanNames.Location = new System.Drawing.Point(284, 379);
+            this.checkBoxCleanNames.Location = new System.Drawing.Point(284, 377);
             this.checkBoxCleanNames.Name = "checkBoxCleanNames";
             this.checkBoxCleanNames.Size = new System.Drawing.Size(132, 17);
             this.checkBoxCleanNames.TabIndex = 44;
@@ -237,8 +243,11 @@
             // 
             // checkBoxCheckList
             // 
+            this.checkBoxCheckList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxCheckList.AutoSize = true;
-            this.checkBoxCheckList.Location = new System.Drawing.Point(12, 379);
+            this.checkBoxCheckList.Checked = true;
+            this.checkBoxCheckList.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxCheckList.Location = new System.Drawing.Point(267, 451);
             this.checkBoxCheckList.Name = "checkBoxCheckList";
             this.checkBoxCheckList.Size = new System.Drawing.Size(83, 17);
             this.checkBoxCheckList.TabIndex = 45;
@@ -380,7 +389,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(688, 454);
+            this.ClientSize = new System.Drawing.Size(688, 481);
             this.Controls.Add(this.textBoxValueNew3);
             this.Controls.Add(this.textBoxValueNew2);
             this.Controls.Add(this.textBoxValueNew1);
@@ -417,6 +426,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxModelName);
             this.Name = "CreateParamsForm";
+            this.Padding = new System.Windows.Forms.Padding(10);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Create Parameters";
             this.ResumeLayout(false);

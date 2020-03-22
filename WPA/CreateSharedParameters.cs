@@ -38,7 +38,9 @@ namespace WPA
 
             foreach (Category item in doc.Settings.Categories)
             {
-                if (!item.Name.Contains("Tags") && !item.Name.Contains("Analytical"))
+                FilteredElementCollector fec = new FilteredElementCollector(doc).OfCategoryId(item.Id);
+
+                if (!item.Name.Contains("Tags") && !item.Name.Contains("Analytical") && fec.Count()>0)
                 {
                     documentCategories.Add(item.Name);
                 }
@@ -86,7 +88,7 @@ namespace WPA
 
                 //if a parameter with the same is already in the project, throw an error
 
-                int count = 0;
+                string count = "";
 
                 using (Transaction t = new Transaction(doc, "Add parameters"))
                 {
@@ -97,7 +99,7 @@ namespace WPA
                     t.Commit();
                 }
 
-                TaskDialog.Show("Result", $"{count} parameters added");
+                TaskDialog.Show("Result", count);
 
                 using (Transaction t = new Transaction(doc, "Set parameters"))
                 {
@@ -116,7 +118,7 @@ namespace WPA
                                 //check that the parameter exists first!
                                 try
                                 {
-                                    element.LookupParameter(param).Set(parametersNamesAndValues[param]);
+                                 //   element.LookupParameter(param).Set(parametersNamesAndValues[param]);
                                 }
                                 catch
                                 {
@@ -140,9 +142,10 @@ namespace WPA
             return Result.Succeeded;
         }
 
-        private static int CreateProjectParameters(Application app, Document doc, List<Category> RevitCategories, List<string> Parameters, string GroupName)
+        private static string CreateProjectParameters(Application app, Document doc, List<Category> RevitCategories, List<string> Parameters, string GroupName)
         {
-            int count = 0;
+            int newParameters = 0;
+            int newCategories = 0;
             
             CategorySet tempCategorySet = app.Create.NewCategorySet();
 
@@ -178,7 +181,7 @@ namespace WPA
                     if (!tempCategorySet.IsEmpty)
                     {
                         
-
+                        //shared parameter does not exist
                         if (groupName.Definitions.get_Item(name) == null)
                         {
                             InstanceBinding newInstanceBinding = app.Create.NewInstanceBinding(tempCategorySet); //cats
@@ -187,15 +190,17 @@ namespace WPA
 
                             doc.ParameterBindings.Insert(externalDefinition, newInstanceBinding, BuiltInParameterGroup.PG_DATA);
 
-                            count++;
+                            newParameters++;
 
                         }
+                        //shared parameter exists
                         else
                         {
                             ExternalDefinition existingDefinition = groupName.Definitions.get_Item(name) as ExternalDefinition;
 
                             ElementBinding binding = doc.ParameterBindings.get_Item(existingDefinition) as ElementBinding;
 
+                            //additional categories added to an existing shared parameter (re-insert)
                             if (binding != null)
                             {
                                 foreach (Category item in binding.Categories)
@@ -206,17 +211,19 @@ namespace WPA
                                 InstanceBinding newInstanceBinding = app.Create.NewInstanceBinding(tempCategorySet); //cats
 
                                 doc.ParameterBindings.ReInsert(existingDefinition, newInstanceBinding, BuiltInParameterGroup.PG_DATA);
+
+                                newCategories++;
                             }
+                            //shared parameter exists but has never been inserted (if the user undo the operation)
                             else
                             {
                                 InstanceBinding newInstanceBinding = app.Create.NewInstanceBinding(tempCategorySet); //cats
 
                                 doc.ParameterBindings.Insert(existingDefinition, newInstanceBinding, BuiltInParameterGroup.PG_DATA);
+
+                                newCategories++;
                             }
 
-
-
-                            count++;
                         }
 
                     }
@@ -233,7 +240,7 @@ namespace WPA
 
             //File.Delete(tempSharedParameterFile);
 
-            return count;
+            return $"Parameters created: {newParameters}\nParameters categories updated: {newCategories}";
         }
     }
 }
