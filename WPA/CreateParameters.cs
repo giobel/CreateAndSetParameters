@@ -113,6 +113,7 @@ namespace WPA
                         {
                             foreach (string param in parametersNamesAndValues.Keys)
                             {
+                                //check that the parameter exists first!
                                 element.LookupParameter(param).Set(parametersNamesAndValues[param]);
                             }
                         }
@@ -134,19 +135,6 @@ namespace WPA
         private static int CreateProjectParameters(Application app, Document doc, List<Category> RevitCategories, List<string> Parameters, string GroupName)
         {
             int count = 0;
-            CategorySet cats = app.Create.NewCategorySet();
-
-            foreach (Category item in RevitCategories)
-            {
-                IList<Element> fec = new FilteredElementCollector(doc).OfCategoryId(item.Id).WhereElementIsNotElementType().ToElements();
-
-                //only checks the first parameter..not very strong..NOT the best way to do it
-                //if (fec.Count > 0 && fec.First().LookupParameter(Parameters.First()) == null)
-                if (fec.Count > 0)
-                {
-                    cats.Insert(item);
-                }
-            }
 
             //get the parameter file
             string sharedParameterFile = doc.Application.SharedParametersFilename;
@@ -158,14 +146,14 @@ namespace WPA
 
             DefinitionGroup groupName = app.OpenSharedParameterFile().Groups.Create(GroupName); //store under Data
 
-            FilteredElementCollector fecParameterElements = new FilteredElementCollector(doc).OfClass(typeof(ParameterElement));
+            //FilteredElementCollector fecParameterElements = new FilteredElementCollector(doc).OfClass(typeof(ParameterElement));
 
-            List<string> existingParametersName = new List<string>();
+            //List<string> existingParametersName = new List<string>();
 
-            foreach (ParameterElement item in fecParameterElements)
-            {
-                existingParametersName.Add(item.Name);
-            }
+            //foreach (ParameterElement item in fecParameterElements)
+            //{
+            //    existingParametersName.Add(item.Name);
+            //}
 
             try
             {
@@ -180,19 +168,27 @@ namespace WPA
                     {
                         IList<Element> fec = new FilteredElementCollector(doc).OfCategoryId(item.Id).WhereElementIsNotElementType().ToElements();
 
-                        if (fec.Count > 0 && fec.First().LookupParameter(name) == null)
+                        if (fec.Count > 0)
                         {
-                            tempCategorySet.Insert(item);
+                            Parameter p = fec.First().LookupParameter(name);
+                            if (p == null)
+                            {
+                                tempCategorySet.Insert(item);
+                            }
+
                         }
                     }
 
-                    ExternalDefinition externalDefinition = groupName.Definitions.Create(new ExternalDefinitionCreationOptions(name, ParameterType.Text)) as ExternalDefinition;
+                    if (!tempCategorySet.IsEmpty)
+                    {
+                        ExternalDefinition externalDefinition = groupName.Definitions.Create(new ExternalDefinitionCreationOptions(name, ParameterType.Text)) as ExternalDefinition;
 
                         InstanceBinding newInstanceBinding = app.Create.NewInstanceBinding(tempCategorySet); //cats
 
                         doc.ParameterBindings.Insert(externalDefinition, newInstanceBinding, BuiltInParameterGroup.PG_DATA);
-
-                        count++;                        
+                        
+                        count++;
+                    }
                 }
             }
             catch(Exception ex)
