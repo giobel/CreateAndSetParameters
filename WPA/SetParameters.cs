@@ -27,8 +27,11 @@ namespace WPA
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
-            Debug.Print("Start");
+            string messasge = "";
 
+            //categories selected by default
+            List<string> defaultSelectedCategories = new List<string>() { "Air Terminals", "Cable Trays", "Casework", "Ceilings",
+            "Duct Accessories", "Duct Fittings", "Duct Systems", "Floors", "Wires"};
 
             //categories in the current model excluding tags and analytical
             List<string> documentCategories = new List<string>();
@@ -41,10 +44,57 @@ namespace WPA
                 }
 
             }
-                StringBuilder sb = new StringBuilder();
+
+            using (var form = new CreateParamsForm(documentCategories, defaultSelectedCategories))
+            {
+
+                form.ShowDialog();
+
+                if (form.DialogResult == System.Windows.Forms.DialogResult.Cancel)
+                {
+                    return Result.Cancelled;
+                }
+
+                Categories allCategories = doc.Settings.Categories;
+
+                List<Category> selectedCategories = new List<Category>();
+
+                List<ElementId> builtInCats = new List<ElementId>();
+
+                foreach (string item in form.SelectedCategories)
+                {
+
+                    builtInCats.Add(allCategories.get_Item(item).Id);
+
+                }
+
+                ElementMulticategoryFilter categoryFilter = new ElementMulticategoryFilter(builtInCats);
+
+                IList<Element> fec = new FilteredElementCollector(doc).WherePasses(categoryFilter).WhereElementIsNotElementType().ToElements();
 
 
+                using (Transaction t = new Transaction(doc, "Set parameters"))
+                {
+                    t.Start();
 
+                    foreach (Element item in fec)
+                    {
+                        try
+                        {
+                            item.LookupParameter("Model Name").Set("Site");
+                        }
+                        catch (Exception ex)
+                        {
+                            message = ex.Message;
+                        }
+
+                    }
+                    t.Commit();
+                }
+
+            }
+
+            TaskDialog.Show("r", messasge);
                 return Result.Succeeded;
 
         }
