@@ -425,6 +425,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxModelName);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "CreateParamsForm";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

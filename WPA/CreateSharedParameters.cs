@@ -118,7 +118,7 @@ namespace WPA
                                 //check that the parameter exists first!
                                 try
                                 {
-                                 //   element.LookupParameter(param).Set(parametersNamesAndValues[param]);
+                                    element.LookupParameter(param).Set(parametersNamesAndValues[param]);
                                 }
                                 catch
                                 {

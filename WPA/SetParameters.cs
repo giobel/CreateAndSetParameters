@@ -27,25 +27,8 @@ namespace WPA
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
 
-            string messasge = "";
 
-            //categories selected by default
-            List<string> defaultSelectedCategories = new List<string>() { "Air Terminals", "Cable Trays", "Casework", "Ceilings",
-            "Duct Accessories", "Duct Fittings", "Duct Systems", "Floors", "Wires"};
-
-            //categories in the current model excluding tags and analytical
-            List<string> documentCategories = new List<string>();
-
-            foreach (Category item in doc.Settings.Categories)
-            {
-                if (!item.Name.Contains("Tags") && !item.Name.Contains("Analytical"))
-                {
-                    documentCategories.Add(item.Name);
-                }
-
-            }
-
-            using (var form = new CreateParamsForm(documentCategories, defaultSelectedCategories))
+            using (var form = new FormOpenFile())
             {
 
                 form.ShowDialog();
@@ -57,46 +40,73 @@ namespace WPA
 
                 Categories allCategories = doc.Settings.Categories;
 
-                List<Category> selectedCategories = new List<Category>();
+                string inputFile = form.filePath;
 
-                List<ElementId> builtInCats = new List<ElementId>();
-
-                foreach (string item in form.SelectedCategories)
+                using (Transaction t = new Transaction(doc, "Update Data from Excel"))
                 {
 
-                    builtInCats.Add(allCategories.get_Item(item).Id);
-
-                }
-
-                ElementMulticategoryFilter categoryFilter = new ElementMulticategoryFilter(builtInCats);
-
-                IList<Element> fec = new FilteredElementCollector(doc).WherePasses(categoryFilter).WhereElementIsNotElementType().ToElements();
-
-
-                using (Transaction t = new Transaction(doc, "Set parameters"))
-                {
                     t.Start();
 
-                    foreach (Element item in fec)
+
+                    using (var reader = new StreamReader(inputFile))
                     {
-                        try
+
+                        List<string> parameters = reader.ReadLine().Split(',').ToList();
+
+                        int mappingColumn = parameters.IndexOf("Package Specific Description");
+
+                        string report = "";
+
+                        while (!reader.EndOfStream)
                         {
-                            item.LookupParameter("Model Name").Set("Site");
-                        }
-                        catch (Exception ex)
-                        {
-                            message = ex.Message;
+                            var line = reader.ReadLine();
+
+                            var values = line.Split(',').ToList();
+
+                            IList<Element> elementsByCategory = new FilteredElementCollector(doc).OfCategoryId(allCategories.get_Item(values[mappingColumn]).Id).WhereElementIsNotElementType().ToElements();
+
+                            int elementsUpdated = 0;
+                            string tempParams = "";
+                            string currentCategory = values[mappingColumn];
+
+                            foreach (Element item in elementsByCategory)
+                            {
+                                
+                                string tempTempParams = "";
+                                for (int i = 0; i < parameters.Count; i++)
+                                {
+                                    if (parameters[i] != "Package Specific Description")
+                                    {
+                                        try
+                                        {
+                                            Parameter p = item.LookupParameter(parameters[i].Trim());
+                                            p.Set(values[i]);
+                                        }
+                                        catch
+                                        {
+                                            tempTempParams += $"Parameter {parameters[i]} not found\n";
+                                        }
+                                    }
+                                }
+                                tempParams = tempTempParams;
+                                elementsUpdated++;
+                            }
+
+                            
+                            report += $"{elementsUpdated} elements in {currentCategory}\n Errors: {tempParams}";
+
                         }
 
+                        TaskDialog.Show("Report", $"{report}");
+
                     }
+
                     t.Commit();
                 }
 
-            }
-
-            TaskDialog.Show("r", messasge);
                 return Result.Succeeded;
 
+            }
         }
     }
 }

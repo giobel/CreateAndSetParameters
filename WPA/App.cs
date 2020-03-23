@@ -19,8 +19,13 @@ namespace WPA
                 a.CreateRibbonTab("WPA");
 
                 RibbonPanel ifcParamPanel = GetSetRibbonPanel(a, "WPA", "IFC Parameters");
-
-                if (AddPushButton(ifcParamPanel, "btnCreateParams", "Add Parameters", "", "pack://application:,,,/ReviTab;component/Resources/addParameters.png", "WPA.SelectAllText", "Add the required project parameters.") == false)
+                
+                if (AddPushButton(ifcParamPanel, "btnCreateParams", "Add Shared\nParameters", "", "pack://application:,,,/WPA;component/Resources/addParameters.png", "WPA.CreateSharedParameters", "Add the required shared parameters to the selected categories.") == false)
+                {
+                    MessageBox.Show("Failed to add button Create Parameters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
+                if (AddPushButton(ifcParamPanel, "btnSetParams", "Set Parameters\nFrom Excel", "", "pack://application:,,,/WPA;component/Resources/addParameters.png", "WPA.SetParameters", "Set the selected shared parameters for the selected categories.") == false)
                 {
                     MessageBox.Show("Failed to add button Create Parameters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
